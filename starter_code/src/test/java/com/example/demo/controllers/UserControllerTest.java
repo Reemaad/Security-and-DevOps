@@ -18,22 +18,22 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class UserControllerTest {
-    private  UserController userController;
+    private UserController userController;
     private UserRepository userRepository = mock(UserRepository.class);
 
     private CartRepository cartRepository = mock(CartRepository.class);
     private BCryptPasswordEncoder encoder = mock(BCryptPasswordEncoder.class);
 
     @Before
-    public void setUp(){
+    public void setUp() {
         userController = new UserController();
-        TestUtils.injectObjects(userController,"userRepository", userRepository);
-        TestUtils.injectObjects(userController,"cartRepository", cartRepository);
-        TestUtils.injectObjects(userController,"bCryptPasswordEncoder", encoder);
+        TestUtils.injectObjects(userController, "userRepository", userRepository);
+        TestUtils.injectObjects(userController, "cartRepository", cartRepository);
+        TestUtils.injectObjects(userController, "bCryptPasswordEncoder", encoder);
     }
 
     @Test
-    public void create_user_happy_path() throws Exception{
+    public void create_user_happy_path() throws Exception {
         when(encoder.encode("testPassword")).thenReturn("thisIsHashed");
         CreateUserRequest createUserRequest = new CreateUserRequest();
         createUserRequest.setUsername("test");

@@ -5,11 +5,8 @@ import com.example.demo.model.persistence.Cart;
 import com.example.demo.model.persistence.Item;
 import com.example.demo.model.persistence.User;
 import com.example.demo.model.persistence.UserOrder;
-import com.example.demo.model.persistence.repositories.CartRepository;
-import com.example.demo.model.persistence.repositories.ItemRepository;
 import com.example.demo.model.persistence.repositories.OrderRepository;
 import com.example.demo.model.persistence.repositories.UserRepository;
-import com.example.demo.model.requests.ModifyCartRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +14,15 @@ import org.springframework.http.ResponseEntity;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class OrderControllerTest {
     private OrderController orderController;
-    private OrderRepository orderRepository  = mock(OrderRepository.class);
+    private OrderRepository orderRepository = mock(OrderRepository.class);
     private UserRepository userRepository = mock(UserRepository.class);
     private Item item = new Item();
     User user = new User();
@@ -37,7 +34,6 @@ public class OrderControllerTest {
         TestUtils.injectObjects(orderController, "orderRepository", orderRepository);
         TestUtils.injectObjects(orderController, "userRepository", userRepository);
 
-
         List<Item> items = new ArrayList<>();
         List<UserOrder> userOrders = new ArrayList<>();
 
@@ -47,7 +43,6 @@ public class OrderControllerTest {
         item.setDescription("this item for testing");
 
         items.add(item);
-
 
         user.setId(0);
         user.setUsername("test1");
@@ -64,7 +59,6 @@ public class OrderControllerTest {
 
         when(orderRepository.findByUser(user)).thenReturn(userOrders);
 
-
     }
 
     @Test
@@ -76,7 +70,7 @@ public class OrderControllerTest {
         List<UserOrder> userOrders = response.getBody();
 
         assertNotNull(userOrders);
-        assertEquals(String.valueOf(1L),userOrders.get(0).getId().toString());
+        assertEquals(String.valueOf(1L), userOrders.get(0).getId().toString());
     }
 
 

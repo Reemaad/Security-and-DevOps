@@ -62,7 +62,7 @@ public class ItemControllerTest {
         Item item = response.getBody();
 
         assertNotNull(item);
-        assertEquals(this.item.getId(),item.getId());
+        assertEquals(this.item.getId(), item.getId());
     }
 
     @Test

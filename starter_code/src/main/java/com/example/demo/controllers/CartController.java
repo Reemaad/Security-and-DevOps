@@ -3,8 +3,8 @@ package com.example.demo.controllers;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,19 +31,19 @@ public class CartController {
     private CartRepository cartRepository;
     @Autowired
     private ItemRepository itemRepository;
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+    Logger logger= LogManager.getLogger(UserController.class);
 
     @PostMapping("/addToCart")
     public ResponseEntity<Cart> addTocart(@RequestBody ModifyCartRequest request) {
-        log.info("Add item to cart, ModifyCartRequest: ", request);
+        logger.info("Add item to cart, ModifyCartRequest: {}", request);
         User user = userRepository.findByUsername(request.getUsername());
         if (user == null) {
-            log.error("User not found");
+            logger.error("User not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         Optional<Item> item = itemRepository.findById(request.getItemId());
         if (!item.isPresent()) {
-            log.error("Item not found");
+            logger.error("Item not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         Cart cart = user.getCart();
@@ -55,15 +55,15 @@ public class CartController {
 
     @PostMapping("/removeFromCart")
     public ResponseEntity<Cart> removeFromcart(@RequestBody ModifyCartRequest request) {
-        log.info("Remove item from cart, ModifyCartRequest: ", request);
+        logger.info("Remove item from cart, ModifyCartRequest: {}", request);
         User user = userRepository.findByUsername(request.getUsername());
         if (user == null) {
-            log.error("User not found");
+            logger.error("User not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         Optional<Item> item = itemRepository.findById(request.getItemId());
         if (!item.isPresent()) {
-            log.error("Item not found");
+            logger.error("Item not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         Cart cart = user.getCart();
